@@ -1,0 +1,33 @@
+section.posts .rows {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+section.posts .rows .col-new {
+    margin-bottom: 20px;
+    flex: 1 1 300px;
+    padding: 10px;
+}
+
+section.posts .rows .col-new img {
+    width: 100%;
+    height: auto;
+}
+
+section.posts .rows .col-new a {
+    text-decoration: none;
+}
+
+section.posts .rows .col-new h3 {
+    color: #000;
+}
+
+section.posts .rows .col-new p {
+    color: #333;
+}
+
+section.posts {
+    margin-top: 30px;
+}
