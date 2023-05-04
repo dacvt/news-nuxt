@@ -54,9 +54,9 @@ const { data } = await useAsyncData(
   }
 )
 const getImage = (post) => {
-  const linkImageMatch = post.content.rendered.match(/(https:(.+)(.jpg|.png))/)
+  const linkImageMatch = post.content.rendered.match(/(https:(.+)(.jpg|.png)("|.+?"))/)
   if (linkImageMatch) {
-    return linkImageMatch[0];
+    return linkImageMatch[0].replace('"', '').replace('&amp;', '&')
   }
   return "";
 }
