@@ -22,7 +22,7 @@
                 :src="getImage(item)"
                 :alt="item.title.rendered"
               />
-              <h3>{{ item.title.rendered }}</h3>
+              <h3>{{ convertHtmlToText(item.title.rendered) }}</h3>
               <p v-html="item.excerpt.rendered"></p>
             </a>
           </div>
@@ -33,40 +33,48 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: ["ref"]
-})
 
-const { data } = await useAsyncData(
-  async () => {
-    let res = await $fetch('https://9newstoday.net/wp-json/wp/v2/posts?per_page=20')
-    for (let i = 0; i < res.length; i++) {
-      // let url = res[i].yoast_head_json?.og_image[0]?.url
-      // if (url) continue
-      // url = (res[i]?.content?.rendered || '').match(new RegExp('src="(.+)"', 'g'))
-      // res[i].yoast_head_json = {
-      //   og_image: [{
-      //     url: url || url[0]
-      //   }]
-      // }
+  const { convert } = require('html-to-text');
+
+  definePageMeta({
+    middleware: ["ref"]
+  })
+
+  const { data } = await useAsyncData(
+    async () => {
+      let res = await $fetch('https://9newstoday.net/wp-json/wp/v2/posts?per_page=20')
+      for (let i = 0; i < res.length; i++) {
+        // let url = res[i].yoast_head_json?.og_image[0]?.url
+        // if (url) continue
+        // url = (res[i]?.content?.rendered || '').match(new RegExp('src="(.+)"', 'g'))
+        // res[i].yoast_head_json = {
+        //   og_image: [{
+        //     url: url || url[0]
+        //   }]
+        // }
+      }
+      return res
     }
-    return res
-  }
-)
-const getImage = (post) => {
-  if (post.fimg_url) {
-    return post.fimg_url
-  }
-  const imageMatch = post.content.rendered.match(/(<img (.+) \/>)/);
-  if (!imageMatch) {
+  )
+  const getImage = (post) => {
+    if (post.fimg_url) {
+      return post.fimg_url
+    }
+    const imageMatch = post.content.rendered.match(/(<img (.+) \/>)/);
+    if (!imageMatch) {
+      return "";
+    }
+    const linkImageMatch = imageMatch[0].match(/(https:([^"]?)(.jpg"|.png"|.jpeg|.+?"))/)
+    if (linkImageMatch) {
+      return convert(linkImageMatch[0].replace('"', ''))
+    }
     return "";
   }
-  const linkImageMatch = imageMatch[0].match(/(https:([^"]?)(.jpg"|.png"|.jpeg|.+?"))/)
-  if (linkImageMatch) {
-    return linkImageMatch[0].replace('"', '').replace('&amp;', '&')
+
+  const convertHtmlToText = (htmlContent) => {
+    return convert(htmlContent);
   }
-  return "";
-}
+
 </script>
 <style>
 body,
