@@ -71,10 +71,6 @@
     return "";
   }
 
-  const convertHtmlToText = (htmlContent) => {
-    return convert(htmlContent);
-  }
-
 </script>
 <style>
 body,
