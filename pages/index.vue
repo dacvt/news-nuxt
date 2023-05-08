@@ -54,6 +54,9 @@ const { data } = await useAsyncData(
   }
 )
 const getImage = (post) => {
+  if (post.fimg_url) {
+    return post.fimg_url
+  }
   const imageMatch = post.content.rendered.match(/(<img (.+) \/>)/);
   if (!imageMatch) {
     return "";
