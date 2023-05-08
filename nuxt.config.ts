@@ -24,7 +24,4 @@ export default defineNuxtConfig({
   runtimeConfig: {
     currencyKey: process.env.CURRENCY_API_KEY
   },
-  buildModules: [
-    "html-to-text",
-  ],
 })

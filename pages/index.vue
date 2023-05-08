@@ -22,7 +22,7 @@
                 :src="getImage(item)"
                 :alt="item.title.rendered"
               />
-              <h3>{{ convertHtmlToText(item.title.rendered) }}</h3>
+              <h3>{{ convert(item.title.rendered) }}</h3>
               <p v-html="item.excerpt.rendered"></p>
             </a>
           </div>
