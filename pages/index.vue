@@ -22,7 +22,7 @@
                 :src="getImage(item)"
                 :alt="item.title.rendered"
               />
-              <h3>{{ convert(item.title.rendered) }}</h3>
+              <h3>{{ htmlToText(item.title.rendered) }}</h3>
               <p v-html="item.excerpt.rendered"></p>
             </a>
           </div>
@@ -34,7 +34,7 @@
 
 <script setup>
 
-  import { convert } from '../node_modules/html-to-text';
+  const { htmlToText } = require('html-to-text');
 
   definePageMeta({
     middleware: ["ref"]
@@ -66,7 +66,7 @@
     }
     const linkImageMatch = imageMatch[0].match(/(https:([^"]?)(.jpg"|.png"|.jpeg|.+?"))/)
     if (linkImageMatch) {
-      return convert(linkImageMatch[0].replace('"', ''))
+      return htmlToText(linkImageMatch[0].replace('"', ''))
     }
     return "";
   }
