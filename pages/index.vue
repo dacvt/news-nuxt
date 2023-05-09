@@ -34,8 +34,6 @@
 
 <script setup>
 
-  const { htmlToText } = require('html-to-text');
-
   definePageMeta({
     middleware: ["ref"]
   })
@@ -69,6 +67,19 @@
       return htmlToText(linkImageMatch[0].replace('"', ''))
     }
     return "";
+  }
+
+  const htmlToText = (html) => {
+    return html
+    .replace(/\n/ig, '')
+    .replace(/<style[^>]*>[\s\S]*?<\/style[^>]*>/ig, '')
+    .replace(/<head[^>]*>[\s\S]*?<\/head[^>]*>/ig, '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script[^>]*>/ig, '')
+    .replace(/<\/\s*(?:p|div)>/ig, '\n')
+    .replace(/<br[^>]*\/?>/ig, '\n')
+    .replace(/<[^>]*>/ig, '')
+    .replace('&nbsp;', ' ')
+    .replace(/[^\S\r\n][^\S\r\n]+/ig, ' ')
   }
 
 </script>
