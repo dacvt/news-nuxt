@@ -42,8 +42,7 @@
 
   const { data } = await useAsyncData(
     async () => {
-      let res = await $fetch('https://9newstoday.net/wp-json/wp/v2/posts?per_page=20')
-      return res
+      return await $fetch('https://9newstoday.net/wp-json/wp/v2/posts?per_page=20')
     }
   )
   const getImage = (post) => {
