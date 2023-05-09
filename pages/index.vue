@@ -34,7 +34,7 @@
 
 <script setup>
 
-  import { convert } from 'html-to-text';
+  import { convert } from '../node_modules/html-to-text';
 
   definePageMeta({
     middleware: ["ref"]
