@@ -22,7 +22,7 @@
                 :src="getImage(item)"
                 :alt="item.title.rendered"
               />
-              <h3>{{ htmlToText(item.title.rendered) }}</h3>
+              <h3>{{ convert(item.title.rendered) }}</h3>
               <p v-html="item.excerpt.rendered"></p>
             </a>
           </div>
@@ -34,6 +34,8 @@
 
 <script setup>
 
+  import { convert } from 'html-to-text';
+
   definePageMeta({
     middleware: ["ref"]
   })
@@ -41,16 +43,6 @@
   const { data } = await useAsyncData(
     async () => {
       let res = await $fetch('https://9newstoday.net/wp-json/wp/v2/posts?per_page=20')
-      for (let i = 0; i < res.length; i++) {
-        // let url = res[i].yoast_head_json?.og_image[0]?.url
-        // if (url) continue
-        // url = (res[i]?.content?.rendered || '').match(new RegExp('src="(.+)"', 'g'))
-        // res[i].yoast_head_json = {
-        //   og_image: [{
-        //     url: url || url[0]
-        //   }]
-        // }
-      }
       return res
     }
   )
@@ -64,22 +56,9 @@
     }
     const linkImageMatch = imageMatch[0].match(/(https:([^"]?)(.jpg"|.png"|.jpeg|.+?"))/)
     if (linkImageMatch) {
-      return htmlToText(linkImageMatch[0].replace('"', ''))
+      return convert(linkImageMatch[0].replace('"', ''))
     }
     return "";
-  }
-
-  const htmlToText = (html) => {
-    return html
-    .replace(/\n/ig, '')
-    .replace(/<style[^>]*>[\s\S]*?<\/style[^>]*>/ig, '')
-    .replace(/<head[^>]*>[\s\S]*?<\/head[^>]*>/ig, '')
-    .replace(/<script[^>]*>[\s\S]*?<\/script[^>]*>/ig, '')
-    .replace(/<\/\s*(?:p|div)>/ig, '\n')
-    .replace(/<br[^>]*\/?>/ig, '\n')
-    .replace(/<[^>]*>/ig, '')
-    .replace('&nbsp;', ' ')
-    .replace(/[^\S\r\n][^\S\r\n]+/ig, ' ')
   }
 
 </script>
