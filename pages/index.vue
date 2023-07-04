@@ -42,7 +42,7 @@
 
   const { data } = await useAsyncData(
     async () => {
-      return await $fetch('https://movingworl.com/wp-json/wp/v2/posts?per_page=20');
+      return await $fetch('https://axot.info/wp-json/wp/v2/posts?per_page=20');
     }
   )
   const getImage = (post) => {
