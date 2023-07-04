@@ -23,7 +23,7 @@
                 :alt="item.title.rendered"
               />
               <h3>{{ convert(item.title.rendered) }}</h3>
-              <p v-html="item.excerpt.rendered"></p>
+              <div v-html="item.excerpt.rendered"></div>
             </a>
           </div>
         </div>
@@ -42,7 +42,7 @@
 
   const { data } = await useAsyncData(
     async () => {
-      return await $fetch('https://movingworl.com/wp-json/wp/v2/posts?per_page=20')
+      return await $fetch('https://movingworl.com/wp-json/wp/v2/posts?per_page=20');
     }
   )
   const getImage = (post) => {
