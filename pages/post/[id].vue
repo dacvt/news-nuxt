@@ -28,7 +28,7 @@ const route = useRoute()
 let slug = route.params.id
 const { data: posts } = await useAsyncData(
   'posts',
-  () => $fetch(`https://axot.info/wp-json/wp/v2/posts?slug=${slug}`)
+  () => $fetch(`http://amazingdailynews.com/wp-json/wp/v2/posts?slug=${slug}`)
 )
 </script>
 <style>
