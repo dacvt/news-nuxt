@@ -42,7 +42,7 @@
 
   const { data } = await useAsyncData(
     async () => {
-      return await $fetch('http://amazingdailynews.com/wp-json/wp/v2/posts?per_page=20');
+      return await $fetch('https://amazingmindscape.com/wp-json/wp/v2/posts?per_page=20');
     }
   )
   const getImage = (post) => {
